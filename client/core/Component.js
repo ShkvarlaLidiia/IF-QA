@@ -9,4 +9,24 @@ export class Component {
     this.events = events;
     this.attrs = attrs;
   }
+
+  toHTML() {
+    const element = document.createElement(this.tagName);
+
+    element.className = this.className;
+
+    if (this.children) element.insertAdjacentHTML("beforeend", this.children);
+
+    for (const key in this.events) {
+      const value = this.events[key];
+      element.addEventListener(key, value);
+    }
+
+    for (const key in this.attrs) {
+      const value = this.attrs[key];
+      element.setAttribute(key, value);
+    }
+
+    return element;
+  }
 }

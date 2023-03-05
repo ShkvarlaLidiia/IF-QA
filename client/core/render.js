@@ -1,13 +1,9 @@
-export function render(obj) {
-  const element = document.createElement(obj.tagName);
-  element.className = obj.className;
-  element.insertAdjacentHTML("beforeend", obj.children);
-  element.addEventListener("click", obj.events);
+import { isArray } from "../utils/isArray";
 
-  for (const key in obj.attrs) {
-    const value = obj.attrs[key];
-    element.setAttribute(key, value);
+export function render(parentNode, component) {
+  if (isArray(component)) {
+    return document.querySelector(parentNode).append(...component);
   }
 
-  return element;
+  document.querySelector(parentNode).append(component);
 }
