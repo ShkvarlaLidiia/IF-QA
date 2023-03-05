@@ -3,20 +3,20 @@ import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
 
 import { render } from "./core/render";
-import { getData } from "./utils/getData";
+// import { getData } from "./utils/getData";
 
 import "./public/styles/style.css";
+import { Component } from "./core/Component";
 
 // let isLoading = true;
-const products = [];
-
+// const products = [];
 const header = new Header({
   tagName: "header",
   className: "header",
   children: "<h2>Logo</h2>",
 }).toHTML();
 
-const data = getData("http://127.0.0.1:3333/products", products);
+// const data = getData("http://127.0.0.1:3333/products", products);
 
 const main = new Main({
   tagName: "main",
