@@ -1,0 +1,35 @@
+@import url("./variables.css");
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    background: var(--primary-bg);
+    height: 100vh;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+/* 1rem = 16px */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--padding-m);
+}
+
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    border: 2px solid cyan;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 1rem;
+    margin-top: 1rem;
+}

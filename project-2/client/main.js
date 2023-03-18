@@ -1,37 +1,69 @@
-import "./style.css";
+import { Header } from "./components/Header/Header";
+import { Main } from "./components/Main";
+import { Footer } from "./components/Footer";
+import { Navigation } from "./components/Navigation/Navigation";
+import { Link } from "./components/Link/Link";
 
-// var! , let+ , const+
-const btn = document.getElementById("get-data");
-const people = document.getElementById("people");
+import { render } from "./core/render";
 
-btn.addEventListener("click", (e) => {
-  e.preventDefault();
+import "./public/styles/style.css";
 
-  (async function () {
-    const data = await fetch("http://127.0.0.1:3333/");
-    const parsedData = await data.json();
+const main = new Main({
+  tagName: "main",
+  className: "main",
+}).toHTML();
 
-    const domArr = await parsedData.map((el) => {
-      return `
-            <h2> 
-                name : ${el.name}
-            </h2>
+const footer = new Footer({
+  tagName: "footer",
+  className: "footer",
+}).toHTML();
 
-            <h2> 
-                age : ${el.age}
-            </h2>
+const links = [
+  new Link({
+    text: "Users",
+    className: "nav-link",
+    events: {
+      click: () => fetchData(main, "/users"),
+    },
+  }).toHTML(),
 
-            <h2> 
-                money : ${el.money}
-            </h2>
+  new Link({
+    text: "Products",
+    className: "nav-link",
+    events: {
+      click: () => fetchData(main, "/products"),
+    },
+  }).toHTML(),
+];
 
-            <h2> 
-                skills : ${el.skills.join(" *** ")}
-            </h2>
-            
+const nav = new Navigation({}).toHTML();
+
+nav.append(...links);
+
+const header = new Header({}).toHTML();
+
+header.append(nav);
+
+async function fetchData(main, path) {
+  const data = await fetch(`http://127.0.0.1:3333/${path}`);
+  const parsedData = await data.json();
+
+  const domArr = await parsedData.map((el) => {
+    console.log(parsedData);
+    const entries = Object.entries(el);
+
+    return `
+        <div class="card">
+          ${entries.map((el) => {
+            if (el[0] !== "_id") {
+              return `<h2>${el[0]} : ${el[1]}</h2>`;
+            }
+          })}
+        </div>
         `;
-    });
+  });
 
-    people.insertAdjacentHTML("afterbegin", domArr);
-  })();
-});
+  main.insertAdjacentHTML("afterbegin", domArr.toString().replaceAll(",", " "));
+}
+
+render("#app", [header, main, footer]);
