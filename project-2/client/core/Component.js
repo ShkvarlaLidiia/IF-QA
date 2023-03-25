@@ -11,6 +11,12 @@ export class Component {
     this.text = text;
   }
 
+  toInlineHTML() {
+    return `<${this.tagName} class="${this.className}">
+          ${this.text}
+        </${this.tagName}`;
+  }
+
   toHTML() {
     const element = document.createElement(this.tagName);
 
